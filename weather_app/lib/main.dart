@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../screens/home_screen.dart';
+import '../widgets/custom_bottom_navbar.dart';
+import '../theme/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,11 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const HomeScreen(),
+      theme: AppTheme.lightTheme,
+      home: CustomBottomNavBar(),
     );
   }
 }
