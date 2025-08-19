@@ -3,6 +3,7 @@ import '../widgets/custom_appbar.dart';
 import '../services/weather_api.dart';
 import '../model/weather_model.dart';
 import '../widgets/seven_day_widget.dart';
+import '../widgets/snack_bar_widget.dart';
 
 class CityDetailsScreen extends StatefulWidget {
   final String city;
@@ -42,13 +43,17 @@ class _CityDetailsScreenState extends State<CityDetailsScreen> {
                 child: CircularProgressIndicator(color: Colors.white),
               );
             } else if (snapshot.hasError) {
-              return const Center(
-                child: Text(
-                  "Failed to load data",
-                  style: TextStyle(color: Colors.white),
-                ),
-              );
-            } else if (!snapshot.hasData) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                CustomSnackBar.show(
+                  context,
+                  message:"Failed to load weather data",
+                  backgroundColor: Colors.red,
+                );
+              });
+              return const SizedBox();
+            }
+
+            else if (!snapshot.hasData) {
               return const Center(
                 child: Text(
                   "No data available",

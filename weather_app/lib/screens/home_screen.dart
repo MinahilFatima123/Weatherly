@@ -5,6 +5,8 @@ import '../model/weather_model.dart';
 import 'package:intl/intl.dart';
 import '../widgets/hourly_forecast_widget.dart';
 import '../widgets/city_card.dart';
+import '../screens/details_screen.dart';
+import '../widgets/snack_bar_widget.dart';
 
 
 
@@ -48,7 +50,12 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       } catch (e) {
 
-        print("Error fetching weather for $city: $e");
+        CustomSnackBar.show(
+          context,
+          message: "Error fetching weather for $city: $e",
+          backgroundColor: Colors.red, // error color
+        );
+
       }
     }
   }
@@ -79,17 +86,23 @@ class _HomeScreenState extends State<HomeScreen> {
               return const Center(child: CircularProgressIndicator());
             }
             if (snap.hasError) {
-              return Center(
-                child: Text(
-                  "Error: ${snap.error}",
-                  style: const TextStyle(color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-              );
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Error: ${snap.error}"),
+                    backgroundColor: Colors.red,
+                    behavior: SnackBarBehavior.floating,
+                    duration: const Duration(seconds: 3),
+                  ),
+                );
+              });
+
+              return const SizedBox.shrink();
             }
 
+
             final w = snap.data!;
-            //final todayHours = w.todayHours;
+
             final date = DateTime.parse(w.localtime);
             final formattedDate = DateFormat("EEEE, dd MMMM yyyy | HH:mm").format(date);
             return Center(
@@ -134,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 95,
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   decoration: BoxDecoration(
-                    color: const Color(0x40FFFFFF), // lighter / more transparent white
+                    color: const Color(0x40FFFFFF),
 
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -210,11 +223,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
 
-                    // Right: 7 Day Forecasts (as a TextButton)
+
                     TextButton(
                       onPressed: () {
-                        print("7 Day Forecasts tapped");
-                        // 👉 later you can navigate to another screen
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                CityDetailsScreen(city: _selectedCity),
+                          ),
+                        );
                       },
                       child: Text(
                         "7-Day Forecasts",
@@ -275,7 +294,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: cities.length,
                     itemBuilder: (context, index) {
                       final city = cities[index];
-                      final weather = cityWeatherMap[city]; // Weather object per city
+                      final weather = cityWeatherMap[city];
                       return CityWeatherCard(
                         cityName: city,
                         condition: weather?.condition ?? "",

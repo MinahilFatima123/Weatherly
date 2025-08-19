@@ -11,20 +11,24 @@ class WeatherApiService {
     ),
   );
 
-  final String apiKey = "d7fbf1239dcd4dd98f554343251308";
-
   Future<Weather> getWeather(String city) async {
     try {
       final response = await _dio.get(
         "/forecast.json",
-        queryParameters: {   "key": ApiConstants.apiKey, "q": city, "days": 7},
+        queryParameters: {
+          "key": ApiConstants.apiKey,
+          "q": city,
+          "days": 7,
+        },
       );
 
-
       return Weather.fromJson(response.data);
-
+    } on DioException catch (e) {
+      throw Exception("Dio error: ${e.response?.data ?? e.message}");
     } catch (e) {
-      throw Exception("Failed to fetch weather: $e");
+      throw Exception("Unexpected error: $e");
+    } finally {
+      print("Weather API request completed for city: $city");
     }
   }
 }

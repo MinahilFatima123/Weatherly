@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final String leadingImagePath;
+  final String? leadingImagePath;
   final String? trailingImagePath ;
   final VoidCallback? onLeadingTap;
   final VoidCallback? onTrailingTap;
@@ -10,7 +10,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
     required this.title,
-    required this.leadingImagePath,
+ this.leadingImagePath,
      this.trailingImagePath,
     this.onLeadingTap,
     this.onTrailingTap,
@@ -43,7 +43,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             // Leading Icon
             Align(
               alignment: Alignment.centerLeft,
-              child: GestureDetector(
+              child: leadingImagePath != null
+                  ? GestureDetector(
                 onTap: onLeadingTap,
                 child: Container(
                   height: 36,
@@ -51,17 +52,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   padding: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: const Color(0x80FFFFFF),
+                    color: const Color(0x80FFFFFF), // Transparent white
                   ),
                   child: Image.asset(
-                    leadingImagePath,
+                    leadingImagePath!,
                     height: 14,
                     width: 14,
                     fit: BoxFit.contain,
                   ),
                 ),
-              ),
+              )
+                  : const SizedBox(), // empty space if no leading icon
             ),
+
 
             // Trailing Icon
             Align(

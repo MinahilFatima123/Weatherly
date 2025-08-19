@@ -10,8 +10,8 @@ class NotificationScreen extends StatelessWidget {
       backgroundColor: const Color(0xFF463260), // same background color
       appBar: CustomAppBar(
         title: 'Notifications',
-        leadingImagePath: "assets/png/arrow-left.png",
-        onLeadingTap: () => Navigator.pop(context),
+        // leadingImagePath: "assets/png/arrow-left.png",
+        // onLeadingTap: () => Navigator.pop(context),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

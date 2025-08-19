@@ -5,6 +5,7 @@ import '../widgets/city_card.dart';
 import '../services/weather_api.dart';
 import '../model/weather_model.dart';
 import '../screens/details_screen.dart';
+import '../widgets/search_card.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -62,7 +63,7 @@ class _SearchScreenState extends State<SearchScreen> {
       backgroundColor: const Color(0xFF463260),
       appBar: CustomAppBar(
         title: 'Search for City',
-        leadingImagePath: "assets/png/arrow-left.png",
+        // leadingImagePath: "assets/png/arrow-left.png",
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(15, 42, 15, 0),
@@ -123,11 +124,11 @@ class _SearchScreenState extends State<SearchScreen> {
                       final weather = cityWeatherMap[city];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 12),
-                        child: CityWeatherCard(
+                        child: SearchCityWeatherCard(
                           cityName: city,
                           condition: weather?.condition ?? "",
                           iconUrl: weather?.icon ?? "",
-                          temperature: "${weather?.temperature.round() ?? 0}°",
+                         // temperature: "${weather?.temperature.round() ?? 0}°",
                           isSelected: city == _selectedCity,
                           onTap: () {
                             _selectCity(city);
