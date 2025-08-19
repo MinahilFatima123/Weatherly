@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import '../model/weather_model.dart';
-import '../model/hourly_model.dart';
+import '../constants/keys.dart';
 
 class WeatherApiService {
   final Dio _dio = Dio(
@@ -14,25 +14,17 @@ class WeatherApiService {
   final String apiKey = "d7fbf1239dcd4dd98f554343251308";
 
   Future<Weather> getWeather(String city) async {
-    final response = await _dio.get(
-      "/forecast.json",
-      queryParameters: {"key": apiKey, "q": city, "days": 7},
-    );
+    try {
+      final response = await _dio.get(
+        "/forecast.json",
+        queryParameters: {   "key": ApiConstants.apiKey, "q": city, "days": 7},
+      );
 
-    return Weather.fromJson(response.data);
+
+      return Weather.fromJson(response.data);
+
+    } catch (e) {
+      throw Exception("Failed to fetch weather: $e");
+    }
   }
-  Future<List<HourlyWeather>> todayHours(String city) async {
-    final response = await _dio.get(
-      "/forecast.json",
-      queryParameters: {"key": apiKey, "q": city, "days": 7},
-    );
-
-    final forecastday = response.data['forecast']['forecastday'][0];
-    final hours = (forecastday['hour'] as List)
-        .map((h) => HourlyWeather.fromJson(h))
-        .toList();
-
-    return hours;
-  }
-
 }

@@ -61,7 +61,7 @@ class _CityDetailsScreenState extends State<CityDetailsScreen> {
 
             return Column(
               children: [
-                // Top card with current weather
+
                 Container(
                   width: double.infinity,
                   height: 255,
@@ -76,7 +76,7 @@ class _CityDetailsScreenState extends State<CityDetailsScreen> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Weather Icon
+
                           Image.network(
                             w.icon,
                             width: 169,
@@ -121,7 +121,7 @@ class _CityDetailsScreenState extends State<CityDetailsScreen> {
                         ],
                       ),
                       const SizedBox(height: 27),
-                      // Row: Precipitation, Humidity, Wind
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -223,7 +223,7 @@ class _CityDetailsScreenState extends State<CityDetailsScreen> {
 
                 const SizedBox(height: 16),
 
-                // 7-day forecast
+
                 Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.only(bottom: 16),
@@ -240,6 +240,8 @@ class _CityDetailsScreenState extends State<CityDetailsScreen> {
                     },
                   ),
                 ),
+
+
               ],
             );
           },

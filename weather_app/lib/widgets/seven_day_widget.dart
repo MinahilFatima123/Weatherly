@@ -20,55 +20,63 @@ class ForecastRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 57,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       margin: const EdgeInsets.symmetric(vertical: 4),
       decoration: BoxDecoration(
-        color: const Color(0xFF463260),// transparent white
+        color: const Color(0xFF463260),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         children: [
-          // Day Name
+
           SizedBox(
-           // width: 40,
+            width: 90,
             child: Text(
               dayName,
               style: Theme.of(context).textTheme.bodyMedium,
               overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.left,
             ),
           ),
 
-          const SizedBox(width: 40),
 
-          // Weather Icon
-          Image.network(
-            iconUrl,
+          SizedBox(
             width: 57,
             height: 57,
-            fit: BoxFit.contain,
-            errorBuilder: (_, __, ___) =>
-            const Icon(Icons.error, size: 30, color: Colors.red),
+            child: Image.network(
+              iconUrl,
+              fit: BoxFit.contain,
+              errorBuilder: (_, __, ___) =>
+              const Icon(Icons.error, size: 30, color: Colors.red),
+            ),
           ),
 
-          const SizedBox(width: 4),
+          const SizedBox(width: 8),
 
-          // Weather Condition
+
           Expanded(
             child: Text(
               condition,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontSize: 14,
-                color: Colors.white70, // semi-transparent white
+                color: Colors.white70,
               ),
               overflow: TextOverflow.ellipsis,
             ),
           ),
 
-          SizedBox(width: 10),
-          // Latitude and Longitude aligned to right
-          Text(
-            "${lat >= 0 ? '+' : '-'}${lat.toStringAsFixed(2)} ${lon >= 0 ? '+' : '-'}${lon.toStringAsFixed(2)}",
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 12),
+
+          SizedBox(
+            width: 110,
+            child: Text(
+              "${lat >= 0 ? '+' : '-'}${lat.toStringAsFixed(2)} "
+                  "${lon >= 0 ? '+' : '-'}${lon.toStringAsFixed(2)}",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(fontSize: 12),
+              textAlign: TextAlign.right,
+            ),
           ),
         ],
       ),

@@ -15,21 +15,21 @@ class NotificationScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text(
+        child: Center(
+
+           child: Text(
               "Your Notfications will appear here!",
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 fontSize: 16,
 
-              ),
+
 
             ),
 
 
 
-          ],
         ),
+      ),
       ),
     );
   }
